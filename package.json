@@ -1,0 +1,20 @@
+{
+  "name": "docular-doc-api-doc",
+  "version": "0.0.0",
+  "description": "Docular default doc api. Logic for parsing and rendering for default docs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitsome/docular-doc-api-doc.git"
+  },
+  "keywords": [
+    "docular",
+    "documentation"
+  ],
+  "author": "John David Martin",
+  "license": "MIT",
+  "dependencies": {}
+}
