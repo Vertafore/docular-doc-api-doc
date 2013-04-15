@@ -224,10 +224,10 @@ module.exports =  {
 
     heading: function (dom) {
         var self = this;
-        if(self.docType == "module" || !self.name) {return false;}
+        if(self.docType == "module" || !self.shortName) {return false;}
 
         var moduleInfo = self.getModuleInfo();
-        var name = self.name;
+        var name = self.shortName;
 
         if(moduleInfo.item) {
             name = moduleInfo.item;
