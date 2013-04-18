@@ -201,6 +201,13 @@ module.exports =  {
                         (title || url).replace(/^#/g, '').replace(/\n/g, ' ') +
                         (isAngular ? '</code>' : '') +
                         '</a>';
+                })
+
+                /*============== Additionally Let's replace ''' to pre tags (https://help.github.com/articles/github-flavored-markdown) ==========*/
+
+                .replace(/```([^\n]+)\n(([^`]|`[^``]|``[^`])*)```/mgi, function(_all, codeType, code) {
+                    return placeholder(
+                        '<pre class="prettyprint linenums">' + code + '</pre>');
                 });
 
                 return text;
