@@ -203,8 +203,7 @@ module.exports =  {
                         '</a>';
                 })
 
-                /*============== Additionally Let's replace ''' to pre tags (https://help.github.com/articles/github-flavored-markdown) ==========*/
-
+                //Lastly follow github's approach to code blocks using ```
                 .replace(/```([^\n]+)\n(([^`]|`[^``]|``[^`])*)```/mgi, function(_all, codeType, code) {
                     return placeholder(
                         '<pre class="prettyprint linenums">' + code + '</pre>');
@@ -231,7 +230,7 @@ module.exports =  {
 
     heading: function (dom) {
         var self = this;
-        if(self.docType == "module" || !self.shortName) {return false;}
+        if(self.docType == "module" || !self.shortName || self.name == "index") {return false;}
 
         var moduleInfo = self.getModuleInfo();
         var name = self.shortName;
