@@ -23,6 +23,16 @@ var count = 0;
 
 /*========== EXPORT THE DOC API ==========*/
 
+// module.exports = {
+//     layout:{}
+//     ui_resources:{},
+//     parse: {},
+//     markdown: {},
+//     html: {},
+//     heading: {},
+//     render: {}
+// };
+
 module.exports =  {
 
     identifier: "doc", //matches @doc our default
@@ -230,7 +240,7 @@ module.exports =  {
 
     heading: function (dom) {
         var self = this;
-        if(self.docType == "module" || !self.shortName || self.name == "index") {return false;}
+        if(self.docType == "module" || !self.shortName || self.name == "index" || (self.id && self.id == "index") ) {return false;}
 
         var moduleInfo = self.getModuleInfo();
         var name = self.shortName;
@@ -463,6 +473,5 @@ module.exports =  {
     // All the default rendering is stored in the Doc.js class. Use this in a new api to
     // Build upon those defaults
     render : {}
-
 
 };
