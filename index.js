@@ -6,7 +6,7 @@
 
 /*========== DEPENDENCIES ==========*/
 
-var Showdown = require('./resources/showdown').Showdown;
+var Showdown = require('showdown');
 
 
 /*========== PRIVATE VARIABLES AND METHODS ==========*/
@@ -229,7 +229,7 @@ module.exports =  {
             markdown: function (text) {
 
                 //Currently we use Showdown a node.js implementation of markdown
-                return new Showdown.converter().makeHtml(text);
+                return new Showdown.converter({ extensions : ['table'] }).makeHtml(text);
             }
         }
 

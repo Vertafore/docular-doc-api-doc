@@ -1,6 +1,6 @@
 {
   "name": "docular-doc-api-doc",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "http://grunt-docular.com",
   "description": "Docular default doc api. Logic for parsing and rendering for default docs",
   "main": "index.js",
@@ -17,5 +17,7 @@
   ],
   "author": "John David Martin",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "showdown": "0.3.1"
+  }
 }
