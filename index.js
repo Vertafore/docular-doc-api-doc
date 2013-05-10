@@ -21,6 +21,18 @@ var property = function (name) {
 
 var count = 0;
 
+var returnsFunction = function (text) {
+    var self = this;
+    var match = text.match(/^\{([^}=]+)\}\s+(.*)/);
+    if (!match) {
+        throw new Error("Not a valid 'returns' format: " + text + ' in ' + self.file + ':' + self.line);
+    }
+    self.returns = {
+        type: match[1],
+        description: self.markdown(text.replace(match[0], match[2]))
+    };
+};
+
 /*========== EXPORT THE DOC API ==========*/
 
 // module.exports = {
@@ -104,19 +116,8 @@ module.exports =  {
 
 
         //returns should just be added as a property (there should only be one)
-        'returns' : function (text) {
-            var self = this;
-            var match = text.match(/^\{([^}=]+)\}\s+(.*)/);
-            if (!match) {
-                throw new Error("Not a valid 'returns' format: " + text + ' in ' + self.file + ':' + self.line);
-            }
-            self.returns = {
-                type: match[1],
-                description: self.markdown(text.replace(match[0], match[2]))
-            };
-        },
-        'return' : this['returns'], //an alias for returns
-
+        'returns' : returnsFunction,
+        'return' : returnsFunction,
 
         //requires should be added to the requires bucket
         'requires' : function (text) {
