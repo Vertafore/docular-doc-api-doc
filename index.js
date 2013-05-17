@@ -196,10 +196,10 @@ module.exports =  {
                 })
 
                 //Let's make ```text`` into <code></code>. This way there is a difference between ``text`` and `text`
-                .replace(/``([^`]{1,})``/gmi, function(_, content){ return ' <code>' + content + '</code> ';})
+                .replace(/``([^`]{1,})``/gmi, function(_, content){ return placeholder(' <code>' + content + '</code> ');})
 
                 //Let's make `text` into <code class="plain"></code>. This way there is a difference between ``text`` and `text`
-                .replace(/`([^`]{1,})`/gmi, function(_, content){ return ' <code class="plain">' + content + '</code> ';})
+                .replace(/`([^`]{1,})`/gmi, function(_, content){ return placeholder(' <code class="plain">' + content + '</code> ');})
 
                 //Example PRE text for pretty print
                 .replace(/<pre>([\s\S]*?)<\/pre>/gmi, function(_, content){
@@ -236,11 +236,7 @@ module.exports =  {
             markdown: function (text) {
 
                 //Currently we use Showdown a node.js implementation of markdown
-                try{
-                    return new Showdown.converter({ extensions : ['table'] }).makeHtml(text);
-                } catch (e) {
-                    console.log("TEXT", text);
-                }
+                return new Showdown.converter({ extensions : ['table'] }).makeHtml(text);
             }
         }
 
