@@ -1,6 +1,6 @@
 {
   "name": "docular-doc-api-doc",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "homepage": "http://grunt-docular.com",
   "description": "Docular default doc api. Logic for parsing and rendering for default docs",
   "main": "index.js",

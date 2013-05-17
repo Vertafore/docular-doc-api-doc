@@ -189,6 +189,18 @@ module.exports =  {
                 //DIV cleanup? Not sure what this does.  TODO: figure out what this does
                 text = text.replace(/<div([^>]*)><\/div>/, '<div$1>\n<\/div>')
 
+                //follow github's approach to code blocks using ```
+                .replace(/```([^\n]+)\n(([^`]|`[^``]|``[^`])*)```/mgi, function(_all, codeType, code) {
+                    return placeholder(
+                        '<pre class="prettyprint linenums">' + code + '</pre>');
+                })
+
+                //Let's make ```text`` into <code></code>. This way there is a difference between ``text`` and `text`
+                .replace(/``([^`]{1,})``/gmi, function(_, content){ return ' <code>' + content + '</code> ';})
+
+                //Let's make `text` into <code class="plain"></code>. This way there is a difference between ``text`` and `text`
+                .replace(/`([^`]{1,})`/gmi, function(_, content){ return ' <code class="plain">' + content + '</code> ';})
+
                 //Example PRE text for pretty print
                 .replace(/<pre>([\s\S]*?)<\/pre>/gmi, function(_, content){
                     return placeholder(
@@ -212,12 +224,6 @@ module.exports =  {
                         (title || url).replace(/^#/g, '').replace(/\n/g, ' ') +
                         (isAngular ? '</code>' : '') +
                         '</a>';
-                })
-
-                //Lastly follow github's approach to code blocks using ```
-                .replace(/```([^\n]+)\n(([^`]|`[^``]|``[^`])*)```/mgi, function(_all, codeType, code) {
-                    return placeholder(
-                        '<pre class="prettyprint linenums">' + code + '</pre>');
                 });
 
                 return text;
@@ -230,7 +236,11 @@ module.exports =  {
             markdown: function (text) {
 
                 //Currently we use Showdown a node.js implementation of markdown
-                return new Showdown.converter({ extensions : ['table'] }).makeHtml(text);
+                try{
+                    return new Showdown.converter({ extensions : ['table'] }).makeHtml(text);
+                } catch (e) {
+                    console.log("TEXT", text);
+                }
             }
         }
 
@@ -275,7 +285,7 @@ module.exports =  {
         parameters: function(dom) {
             var self = this;
             dom.h('Parameters', this.param, function(param){
-                dom.tag('code', function() {
+                dom.tag('code', { class: 'plain'}, function() {
                     dom.text(param.name);
                     if (param.optional) {
                         dom.tag('i', function() {
@@ -302,7 +312,7 @@ module.exports =  {
             var self = this;
             if (self.returns) {
                 dom.h('Returns', function() {
-                    dom.tag('code', '{' + self.returns.type + '}');
+                    dom.tag('code', { class: 'plain'}, '{' + self.returns.type + '}');
                     dom.text('– ');
                     dom.html(self.returns.description);
                 });
@@ -314,7 +324,7 @@ module.exports =  {
             var self = this;
             if (self['this']) {
                 dom.h(function(dom){
-                    dom.html("Method's <code>this</code>");
+                    dom.html("Method's <code class='plain'>this</code>");
                 }, function(dom){
                     dom.html(self['this']);
                 });
@@ -337,7 +347,7 @@ module.exports =  {
             var self = this;
             var htmlMethods = self.doc_api_extensions.html;
             dom.h('Usage', function() {
-                dom.code(function() {
+                dom.code({ class: 'plain'}, function() {
                     dom.text(self.name);
                 });
 
