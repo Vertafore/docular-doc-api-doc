@@ -33,6 +33,16 @@ var returnsFunction = function (text) {
     };
 };
 
+var methodFunction = function(dom){
+    var self = this;
+    var htmlMethods = self.doc_api_extensions.html;
+    var name = self.name.match(/^angular(\.mock)?\.(\w+)$/) ? self.name : self.name.split(/\./).pop();
+
+    htmlMethods.parameters.call(self, dom);
+    htmlMethods.returns.call(self, dom);
+    htmlMethods.method_properties_events.call(self, dom);
+};
+
 /*========== EXPORT THE DOC API ==========*/
 
 // module.exports = {
@@ -328,15 +338,8 @@ module.exports =  {
         },
 
 
-        function: function(dom){
-            var self = this;
-            var htmlMethods = self.doc_api_extensions.html;
-            var name = self.name.match(/^angular(\.mock)?\.(\w+)$/) ? self.name : self.name.split(/\./).pop();
-
-            htmlMethods.parameters.call(self, dom);
-            htmlMethods.returns.call(self, dom);
-            htmlMethods.method_properties_events.call(self, dom);
-        },
+        function: methodFunction,
+        method: methodFunction,
 
 
         property: function(dom){
